@@ -141,3 +141,4 @@ void get_digits_radix2(int *array, size_t size, size_t *count, size_t digits)
 				index[pos] = index[pos] - 1; }}}
 	*count = *count + 1, copy_array(array, places, size, digits, count);
 	free(places), free(copy); }
+}
