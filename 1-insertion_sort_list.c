@@ -1,68 +1,36 @@
 #include "sort.h"
 
-
 /**
- * swap1 - sort and array
- * @tprev: node prev
- * @tnext: node next
- * Return: no return
+ * insertion_sort_list - function to order whyt the method insertion
+ *@list: value
+ * print_list - function to be printed
  */
-void swap1(listint_t *tprev, listint_t *tnext)
+void insertion_sort_list(listint_t **list)
 {
-	if (tprev->prev)
-		tprev->prev->next = tnext;
-	if (tnext->next)
-		tnext->next->prev = tprev;
-	tprev->next = tnext->next;
-	tnext->prev = tprev->prev;
-	tprev->prev = tnext;
-	tnext->next = tprev;
-}
+	listint_t *list_cop;
 
-/**
- * swap2 - sort and array
- * @tnext: node prev
- * @tprev: node next
- * Return: no return
- */
-void swap2(listint_t *tnext, listint_t *tprev)
-{
+	if (list == NULL || *list == NULL || (*list)->next == NULL)
+		return;
+	list_cop = (*list)->next;
 
-	if (tnext->prev)
-		tnext->prev->next = tprev;
-	if (tprev->next)
-		tprev->next->prev = tnext;
-	tnext->next = tprev->next;
-	tprev->prev = tnext->prev;
-	tnext->prev = tprev;
-	tprev->next = tnext;
-}
-
-/**
- * swap3 - sort and array
- * @tnext: node prev
- * @tprev: node next
- * @list: head liked list
- * Return: no return
- */
-void swap3(listint_t **list, listint_t *tprev, listint_t *tnext)
-{
-	if (!tnext->next)
+	while (list_cop)
 	{
-		tprev->prev = tnext;
-		tnext->next = tprev;
-		tnext->prev = NULL;
-		tprev->next = NULL;
-		*list = tnext;
-		print_list(*list);
-	} else
-	{
-		tnext->next->prev = tprev;
-		tprev->next = tnext->next;
-		tprev->prev = tnext;
-		tnext->next = tprev;
-		tnext->prev = NULL;
-		if (!tnext->prev)
-			*list = tnext;
+		while (list_cop->prev != NULL && list_cop->n < list_cop->prev->n)
+		{
+			list_cop->prev->next = list_cop->next;
+			if (list_cop->next != NULL)
+				list_cop->next->prev = list_cop->prev;
+			list_cop->next = list_cop->prev;
+			list_cop->prev = list_cop->prev->prev;
+			list_cop->next->prev = list_cop;
+			if (list_cop->prev == NULL)
+				(*list) = list_cop;
+			else
+			{
+				list_cop->prev->next = list_cop;
+			}
+			print_list(*list);
+		}
+		list_cop = list_cop->next;
 	}
 }
